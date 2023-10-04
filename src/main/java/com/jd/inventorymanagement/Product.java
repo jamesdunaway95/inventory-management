@@ -113,8 +113,9 @@ public abstract class Product {
      */
     public void addAssociatedPart(Part part) {
         /**
-         * @// TODO: 10/4/2023 / add part functionality
+         * @// TODO: 10/4/2023 / Need to test
          */
+        this.associatedParts.add(part);
     }
 
     /**
@@ -122,10 +123,9 @@ public abstract class Product {
      */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         /**
-         * @// TODO: 10/4/2023 / delete part functionality
+         * @// TODO: 10/4/2023 / Need to test
          */
-        
-        return false;
+        return this.associatedParts.remove(selectedAssociatedPart);
     }
 
     /**
