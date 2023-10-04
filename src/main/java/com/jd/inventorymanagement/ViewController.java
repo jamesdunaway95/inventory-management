@@ -27,25 +27,25 @@ public class ViewController {
     private TextField partsSearchField;
 
     @FXML
-    private TableColumn<?, ?> productId;
+    private TableColumn<Product, Integer> productId;
 
     @FXML
-    private TableColumn<?, ?> productLvl;
+    private TableColumn<Product, Integer> productLvl;
 
     @FXML
-    private TableColumn<?, ?> productName;
+    private TableColumn<Product, String> productName;
 
     @FXML
-    private TableColumn<?, ?> productPrice;
+    private TableColumn<Product, Double> productPrice;
 
     @FXML
     private TextField productsSearchField;
 
     @FXML
-    private TableView<?> tbParts;
+    private TableView<Part> tbParts;
 
     @FXML
-    private TableView<?> tbProducts;
+    private TableView<Product> tbProducts;
 
     @FXML
     protected void onExitButtonClick() {
