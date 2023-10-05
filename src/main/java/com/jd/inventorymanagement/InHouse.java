@@ -1,5 +1,8 @@
 package com.jd.inventorymanagement;
-
+/**
+ *
+ * @author James Dunaway
+ */
 public class InHouse extends Part {
     private int machineId;
 
@@ -8,10 +11,16 @@ public class InHouse extends Part {
         this.machineId = machineId;
     }
 
+    /**
+     * @param machineId the machineId to set
+     */
     public void setMachineId(int machineId) {
         this.machineId = machineId;
     }
 
+    /**
+     * @return the machineId
+     */
     public int getMachineId() {
         return machineId;
     }

@@ -1,5 +1,8 @@
 package com.jd.inventorymanagement;
-
+/**
+ *
+ * @author James Dunaway
+ */
 public class Outsourced extends Part {
     private String companyName;
 
@@ -8,10 +11,16 @@ public class Outsourced extends Part {
         this.companyName = companyName;
     }
 
+    /**
+     * @param companyName the companyName to set
+     */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
+    /**
+     * @return the company name
+     */
     public String getCompanyName() {
         return companyName;
     }
