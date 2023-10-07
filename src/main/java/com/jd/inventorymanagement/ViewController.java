@@ -26,6 +26,9 @@ public class ViewController {
     @FXML
     private AnchorPane modPartWindow;
 
+    @FXML
+    private AnchorPane addProdWindow;
+
     //region Parts - Main
     @FXML
     private TableView<Part> tbParts;
@@ -60,6 +63,7 @@ public class ViewController {
     void onPartsModifyButtonClick(ActionEvent event) {
         /**
          * TODO: Check that a modifiable part is selected.
+         * TODO: Pre-select the appropriate radio button based on current part (in-house, outsourced)
          */
         mainWindow.setVisible(false);
         modPartWindow.setVisible(true);
@@ -195,7 +199,8 @@ public class ViewController {
 
     @FXML
     void onProductsAddButtonClick(ActionEvent event) {
-
+        mainWindow.setVisible(false);
+        addProdWindow.setVisible(true);
     }
 
     @FXML
@@ -209,8 +214,34 @@ public class ViewController {
     }
     //endregion
 
+    //region Products - Add
+    @FXML
+    private AnchorPane addProdTFields;
+
+    public void onProdPartsAddButtonClick(ActionEvent actionEvent) {
+    }
+
+    public void onAddProdRemovePartClicked(ActionEvent actionEvent) {
+    }
+
+    public void onAddProdSaveClicked(ActionEvent actionEvent) {
+    }
+
+    public void onAddProdCancel(ActionEvent actionEvent) {
+        for (Node node : addProdTFields.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField)node).setText(""); // Clear text
+            }
+        }
+
+        addProdWindow.setVisible(false);
+        mainWindow.setVisible(true);
+    }
+    //endregion
+
     @FXML
     protected void onExitButtonClick() {
         System.exit(0);
     }
+
 }
