@@ -17,11 +17,59 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.ViewController">
    <children>
+      <AnchorPane fx:id="modPartWindow" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="650.0" spacing="75.0">
+               <children>
+                  <Label prefWidth="85.0" text="Modify Part">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton mnemonicParsing="false" onAction="#onInHouseClicked" selected="true" text="In-House">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="partSource1" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" onAction="#onOutsourcedClicked" text="Outsourced" toggleGroup="$partSource1" />
+               </children>
+               <padding>
+                  <Insets left="80.0" />
+               </padding>
+            </HBox>
+            <Label layoutX="121.0" layoutY="104.0" text="ID" />
+            <TextField fx:id="modifyPartIdTField" disable="true" editable="false" layoutX="234.0" layoutY="100.0">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="117.0" layoutY="154.0" prefWidth="32.0" text="Name" />
+            <TextField layoutX="234.0" layoutY="150.0" />
+            <Label layoutX="117.0" layoutY="204.0" prefWidth="32.0" text="Inv" />
+            <TextField layoutX="234.0" layoutY="200.0" />
+            <Label layoutX="117.0" layoutY="254.0" prefHeight="18.0" prefWidth="58.0" text="Price/Cost" />
+            <TextField layoutX="234.0" layoutY="250.0" />
+            <Label layoutX="117.0" layoutY="304.0" prefHeight="18.0" prefWidth="58.0" text="Max" />
+            <TextField layoutX="234.0" layoutY="300.0" />
+            <Label layoutX="435.0" layoutY="304.0" prefHeight="18.0" prefWidth="58.0" text="Min" />
+            <TextField layoutX="508.0" layoutY="300.0" />
+            <Label fx:id="machineIdLabelMod" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="70.0" text="Machine ID" />
+            <TextField fx:id="machineIdTFieldMod" layoutX="234.0" layoutY="350.0" />
+            <Label fx:id="companyNameLabelMod" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="90.0" text="Company Name" visible="false" />
+            <TextField fx:id="companyNameTFieldMod" layoutX="234.0" layoutY="350.0" visible="false" />
+            <HBox alignment="CENTER_LEFT" layoutX="383.0" layoutY="396.0" prefHeight="75.0" prefWidth="300.0" spacing="75.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onModPartsSave" prefWidth="80.0" text="Save" />
+                  <Button mnemonicParsing="false" onAction="#onModPartsCancel" prefWidth="80.0" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="addPartWindow" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="650.0" spacing="75.0">
                <children>
-                  <Label text="Add Part">
+                  <Label prefWidth="65.0" text="Add Part">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -53,10 +101,10 @@
             <TextField layoutX="234.0" layoutY="300.0" />
             <Label layoutX="435.0" layoutY="304.0" prefHeight="18.0" prefWidth="58.0" text="Min" />
             <TextField layoutX="508.0" layoutY="300.0" />
-            <Label fx:id="machineIdLabel" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="70.0" text="Machine ID" />
-            <TextField fx:id="machineIdTField" layoutX="234.0" layoutY="350.0" />
-            <Label fx:id="companyNameLabel" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="90.0" text="Company Name" visible="false" />
-            <TextField fx:id="companyNameTField" layoutX="234.0" layoutY="350.0" visible="false" />
+            <Label fx:id="machineIdLabelAdd" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="70.0" text="Machine ID" />
+            <TextField fx:id="machineIdTFieldAdd" layoutX="234.0" layoutY="350.0" />
+            <Label fx:id="companyNameLabelAdd" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="90.0" text="Company Name" visible="false" />
+            <TextField fx:id="companyNameTFieldAdd" layoutX="234.0" layoutY="350.0" visible="false" />
             <HBox alignment="CENTER_LEFT" layoutX="383.0" layoutY="396.0" prefHeight="75.0" prefWidth="300.0" spacing="75.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onAddPartsSave" prefWidth="80.0" text="Save" />

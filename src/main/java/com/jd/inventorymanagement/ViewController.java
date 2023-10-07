@@ -23,6 +23,9 @@ public class ViewController {
     @FXML
     private AnchorPane addPartWindow;
 
+    @FXML
+    private AnchorPane modPartWindow;
+
     //region Parts - Main
     @FXML
     private TableView<Part> tbParts;
@@ -44,7 +47,6 @@ public class ViewController {
 
     @FXML
     void onPartsAddButtonClick(ActionEvent event) {
-        System.out.println("Add parts button clicked");
         mainWindow.setVisible(false);
         addPartWindow.setVisible(true);
     }
@@ -56,57 +58,36 @@ public class ViewController {
 
     @FXML
     void onPartsModifyButtonClick(ActionEvent event) {
+        /**
+         * TODO: Check that a modifiable part is selected.
+         */
+        mainWindow.setVisible(false);
+        modPartWindow.setVisible(true);
     }
     //endregion
 
     //region Parts - Add
     @FXML
-    private Label machineIdLabel;
+    private Label machineIdLabelAdd;
 
     @FXML
-    private TextField machineIdTField;
+    private TextField machineIdTFieldAdd;
 
     @FXML
-    private Label companyNameLabel;
+    private Label companyNameLabelAdd;
 
     @FXML
-    private TextField companyNameTField;
-
-    @FXML
-    void onInHouseClicked(ActionEvent event) {
-        if (machineIdLabel.isVisible()) {
-            return;
-        }
-        else {
-            companyNameLabel.setVisible(false);
-            companyNameTField.setVisible(false);
-            machineIdLabel.setVisible(true);
-            machineIdTField.setVisible(true);
-        }
-    }
-
-    @FXML
-    void onOutsourcedClicked(ActionEvent event) {
-        if (companyNameLabel.isVisible()) {
-            return;
-        }
-        else {
-            machineIdLabel.setVisible(false);
-            machineIdTField.setVisible(false);
-            companyNameLabel.setVisible(true);
-            companyNameTField.setVisible(true);
-        }
-    }
+    private TextField companyNameTFieldAdd;
 
     @FXML
     void onAddPartsSave(ActionEvent event) {
 
     }
 
+    // Had to change the hierarchy made in scene builder in order to get this work (seemed like the most efficient way).
     @FXML
     void onAddPartsCancel(ActionEvent event) {
         for (Node node : addPartWindow.getChildren()) {
-            System.out.println("Id: " + node.getId());
             if (node instanceof TextField) {
                 ((TextField)node).setText(""); // Clear text
             }
@@ -116,6 +97,82 @@ public class ViewController {
         mainWindow.setVisible(true);
     }
     //endregion
+
+    //region Parts - Modify
+    /**
+     * TODO: Add logic to insert part numbers ID into this text field.
+     */
+    @FXML
+    private TextField modifyPartIdTField;
+
+    @FXML
+    private Label machineIdLabelMod;
+
+    @FXML
+    private TextField machineIdTFieldMod;
+
+    @FXML
+    private Label companyNameLabelMod;
+
+    @FXML
+    private TextField companyNameTFieldMod;
+
+    @FXML
+    void onModPartsSave(ActionEvent event) {
+
+    }
+
+    // Had to change the hierarchy made in scene builder in order to get this work (seemed like the most efficient way).
+    @FXML
+    void onModPartsCancel(ActionEvent event) {
+        for (Node node : modPartWindow.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField)node).setText(""); // Clear text
+            }
+        }
+
+        modPartWindow.setVisible(false);
+        mainWindow.setVisible(true);
+    }
+    //endregion
+
+    @FXML
+    void onInHouseClicked(ActionEvent event) {
+        if (addPartWindow.isVisible() && machineIdLabelAdd.isVisible() ||
+                modPartWindow.isVisible() && machineIdLabelMod.isVisible())
+            return;
+
+        if (addPartWindow.isVisible()) {
+            companyNameLabelAdd.setVisible(false);
+            companyNameTFieldAdd.setVisible(false);
+            machineIdLabelAdd.setVisible(true);
+            machineIdTFieldAdd.setVisible(true);
+        } else if (modPartWindow.isVisible()) {
+            companyNameLabelMod.setVisible(false);
+            companyNameTFieldMod.setVisible(false);
+            machineIdLabelMod.setVisible(true);
+            machineIdTFieldMod.setVisible(true);
+        }
+    }
+
+    @FXML
+    void onOutsourcedClicked(ActionEvent event) {
+        if (addPartWindow.isVisible() && companyNameLabelAdd.isVisible() ||
+                modPartWindow.isVisible() && companyNameLabelMod.isVisible())
+            return;
+
+        if (addPartWindow.isVisible()) {
+            machineIdLabelAdd.setVisible(false);
+            machineIdTFieldAdd.setVisible(false);
+            companyNameLabelAdd.setVisible(true);
+            companyNameTFieldAdd.setVisible(true);
+        } else if (modPartWindow.isVisible()) {
+            machineIdLabelMod.setVisible(false);
+            machineIdTFieldMod.setVisible(false);
+            companyNameLabelMod.setVisible(true);
+            companyNameTFieldMod.setVisible(true);
+        }
+    }
 
     //region Products - Main
     @FXML
