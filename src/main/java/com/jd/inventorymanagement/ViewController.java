@@ -9,8 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -28,6 +26,9 @@ public class ViewController {
 
     @FXML
     private AnchorPane addProdWindow;
+
+    @FXML
+    private AnchorPane modProdWindow;
 
     //region Parts - Main
     @FXML
@@ -210,7 +211,8 @@ public class ViewController {
 
     @FXML
     void onProductsModifyButtonClick(ActionEvent event) {
-
+        mainWindow.setVisible(false);
+        modProdWindow.setVisible(true);
     }
     //endregion
 
@@ -218,7 +220,7 @@ public class ViewController {
     @FXML
     private AnchorPane addProdTFields;
 
-    public void onProdPartsAddButtonClick(ActionEvent actionEvent) {
+    public void onAddProdPartsAddButtonClick(ActionEvent actionEvent) {
     }
 
     public void onAddProdRemovePartClicked(ActionEvent actionEvent) {
@@ -235,6 +237,31 @@ public class ViewController {
         }
 
         addProdWindow.setVisible(false);
+        mainWindow.setVisible(true);
+    }
+    //endregion
+
+    //region Products - Mod
+    @FXML
+    private AnchorPane modProdTFields;
+
+    public void onModProdPartsAddButtonClick(ActionEvent actionEvent) {
+    }
+
+    public void onModProdRemovePartClicked(ActionEvent actionEvent) {
+    }
+
+    public void onModProdSaveClicked(ActionEvent actionEvent) {
+    }
+
+    public void onModProdCancel(ActionEvent actionEvent) {
+        for (Node node : modProdTFields.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField)node).setText(""); // Clear text
+            }
+        }
+
+        modProdWindow.setVisible(false);
         mainWindow.setVisible(true);
     }
     //endregion
