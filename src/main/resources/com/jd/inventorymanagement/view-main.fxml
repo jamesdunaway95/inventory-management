@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.ViewController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ViewController">
    <children>
-      <AnchorPane fx:id="modProdWindow" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="modProdWindow" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <Label layoutX="89.0" layoutY="51.0" text="Modify Product">
                <font>
@@ -252,25 +252,25 @@
                </padding>
             </HBox>
             <Label layoutX="121.0" layoutY="104.0" text="ID" />
-            <TextField disable="true" editable="false" layoutX="234.0" layoutY="100.0" promptText="Auto-Gen Disabled">
+            <TextField fx:id="addPartIdTField" disable="true" editable="false" layoutX="234.0" layoutY="100.0" promptText="Auto-Gen Disabled">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
             <Label layoutX="117.0" layoutY="154.0" prefWidth="32.0" text="Name" />
-            <TextField layoutX="234.0" layoutY="150.0" />
+            <TextField fx:id="addPartNameTField" layoutX="234.0" layoutY="150.0" />
             <Label layoutX="117.0" layoutY="204.0" prefWidth="32.0" text="Inv" />
-            <TextField layoutX="234.0" layoutY="200.0" />
+            <TextField fx:id="addPartLvlTField" layoutX="234.0" layoutY="200.0" />
             <Label layoutX="117.0" layoutY="254.0" prefHeight="18.0" prefWidth="58.0" text="Price/Cost" />
-            <TextField layoutX="234.0" layoutY="250.0" />
+            <TextField fx:id="addPartPriceTField" layoutX="234.0" layoutY="250.0" />
             <Label layoutX="117.0" layoutY="304.0" prefHeight="18.0" prefWidth="58.0" text="Max" />
-            <TextField layoutX="234.0" layoutY="300.0" />
+            <TextField fx:id="addPartMaxTField" layoutX="234.0" layoutY="300.0" />
             <Label layoutX="435.0" layoutY="304.0" prefHeight="18.0" prefWidth="58.0" text="Min" />
-            <TextField layoutX="508.0" layoutY="300.0" />
-            <Label fx:id="machineIdLabelAdd" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="70.0" text="Machine ID" />
-            <TextField fx:id="machineIdTFieldAdd" layoutX="234.0" layoutY="350.0" />
-            <Label fx:id="companyNameLabelAdd" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="90.0" text="Company Name" visible="false" />
-            <TextField fx:id="companyNameTFieldAdd" layoutX="234.0" layoutY="350.0" visible="false" />
+            <TextField fx:id="addPartMinTField" layoutX="508.0" layoutY="300.0" />
+            <Label fx:id="addPartMachIdLabel" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="70.0" text="Machine ID" />
+            <TextField fx:id="addPartMachIdTField" layoutX="234.0" layoutY="350.0" />
+            <Label fx:id="addPartCompNameLabel" layoutX="117.0" layoutY="354.0" prefHeight="18.0" prefWidth="90.0" text="Company Name" visible="false" />
+            <TextField fx:id="addPartCompNameTField" layoutX="234.0" layoutY="350.0" visible="false" />
             <HBox alignment="CENTER_LEFT" layoutX="383.0" layoutY="396.0" prefHeight="75.0" prefWidth="300.0" spacing="75.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onAddPartsSave" prefWidth="80.0" text="Save" />
@@ -279,7 +279,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1250.0" visible="false">
+      <BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1250.0">
          <left>
             <VBox prefHeight="400.0" prefWidth="550.0" style="-fx-border-radius: 15; -fx-border-width: 1; -fx-border-color: black;" BorderPane.alignment="CENTER">
                <children>

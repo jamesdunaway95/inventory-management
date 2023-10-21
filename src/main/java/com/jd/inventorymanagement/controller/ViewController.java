@@ -1,5 +1,7 @@
-package com.jd.inventorymanagement;
+package com.jd.inventorymanagement.controller;
 
+import com.jd.inventorymanagement.model.Part;
+import com.jd.inventorymanagement.model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -9,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+
 
 /**
  *
@@ -73,20 +76,46 @@ public class ViewController {
 
     //region Parts - Add
     @FXML
-    private Label machineIdLabelAdd;
+    private TextField addPartIdTField;
 
     @FXML
-    private TextField machineIdTFieldAdd;
+    private TextField addPartNameTField;
 
     @FXML
-    private Label companyNameLabelAdd;
+    private TextField addPartLvlTField;
 
     @FXML
-    private TextField companyNameTFieldAdd;
+    private TextField addPartPriceTField;
+
+    @FXML
+    private TextField addPartMaxTField;
+
+    @FXML
+    private TextField addPartMinTField;
+
+    @FXML
+    private Label addPartMachIdLabel;
+
+    @FXML
+    private TextField addPartMachIdTField;
+
+    @FXML
+    private Label addPartCompNameLabel;
+
+    @FXML
+    private TextField addPartCompNameTField;
 
     @FXML
     void onAddPartsSave(ActionEvent event) {
+        // TODO: Generate unique ID number
 
+        // TODO: Validate fields
+        boolean isInHouse = addPartMachIdLabel.isVisible();
+
+        // TODO: Create the appropriate object, either InHouse or Outsourced, and generate a part ID #
+
+
+        // TODO: Add new part to part main part table.
     }
 
     // Had to change the hierarchy made in scene builder in order to get this work (seemed like the most efficient way).
@@ -143,15 +172,15 @@ public class ViewController {
 
     @FXML
     void onInHouseClicked(ActionEvent event) {
-        if (addPartWindow.isVisible() && machineIdLabelAdd.isVisible() ||
+        if (addPartWindow.isVisible() && addPartMachIdLabel.isVisible() ||
                 modPartWindow.isVisible() && machineIdLabelMod.isVisible())
             return;
 
         if (addPartWindow.isVisible()) {
-            companyNameLabelAdd.setVisible(false);
-            companyNameTFieldAdd.setVisible(false);
-            machineIdLabelAdd.setVisible(true);
-            machineIdTFieldAdd.setVisible(true);
+            addPartCompNameLabel.setVisible(false);
+            addPartCompNameTField.setVisible(false);
+            addPartMachIdLabel.setVisible(true);
+            addPartMachIdTField.setVisible(true);
         } else if (modPartWindow.isVisible()) {
             companyNameLabelMod.setVisible(false);
             companyNameTFieldMod.setVisible(false);
@@ -162,15 +191,15 @@ public class ViewController {
 
     @FXML
     void onOutsourcedClicked(ActionEvent event) {
-        if (addPartWindow.isVisible() && companyNameLabelAdd.isVisible() ||
+        if (addPartWindow.isVisible() && addPartCompNameLabel.isVisible() ||
                 modPartWindow.isVisible() && companyNameLabelMod.isVisible())
             return;
 
         if (addPartWindow.isVisible()) {
-            machineIdLabelAdd.setVisible(false);
-            machineIdTFieldAdd.setVisible(false);
-            companyNameLabelAdd.setVisible(true);
-            companyNameTFieldAdd.setVisible(true);
+            addPartMachIdLabel.setVisible(false);
+            addPartMachIdTField.setVisible(false);
+            addPartCompNameLabel.setVisible(true);
+            addPartCompNameTField.setVisible(true);
         } else if (modPartWindow.isVisible()) {
             machineIdLabelMod.setVisible(false);
             machineIdTFieldMod.setVisible(false);
@@ -270,5 +299,4 @@ public class ViewController {
     protected void onExitButtonClick() {
         System.exit(0);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.jd.inventorymanagement;
+package com.jd.inventorymanagement.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
