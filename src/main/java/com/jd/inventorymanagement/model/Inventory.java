@@ -29,10 +29,7 @@ public class Inventory {
      * @return Part, if exists.
      */
     public static Part lookupPart(Integer partId) {
-        /**
-         * TODO: Add search function to find matching partId in allParts list. BST?
-         */
-        return null;
+        return allParts.get(partId);
     }
 
     /**
@@ -73,9 +70,7 @@ public class Inventory {
      * @param selectedPart the selectedPart to replace the current one in inventory.
      */
     public static void updatePart(Integer index, Part selectedPart) {
-        /**
-         * TODO: Add update functionality, e.g. find the selected part at the provided index and replace it with the selectedPart.
-         */
+        allParts.set(index, selectedPart);
     }
 
     /**

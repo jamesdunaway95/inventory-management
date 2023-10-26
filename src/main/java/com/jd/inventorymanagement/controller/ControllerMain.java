@@ -67,7 +67,7 @@ public class ControllerMain implements Initializable {
         Parent root  = loader.load();
 
         ControllerAddPart addPart = loader.getController();
-        addPart.SetPartId(1);
+        addPart.SetPartId(Inventory.getAllParts().size() + 1);
 
         Stage stage = new Stage();
         stage.setTitle("Add New Part");
@@ -91,12 +91,26 @@ public class ControllerMain implements Initializable {
 
     @FXML
     void onModifyPartsButton(ActionEvent event) throws IOException {
-        // TODO: Verify there is a part selected to modify
+        // FIXME: This is TOO much for what we need to accomplish.
+        int selectedPart = 0;
+
+        try {
+            selectedPart = partsTableView.getSelectionModel().getSelectedItem().getId();
+        } catch (NullPointerException e) {
+            System.out.println("No modifiable part selected.");
+        }
+
+        if (selectedPart == 0) {
+            return;
+        } else {
+            System.out.println("Now modifying " + selectedPart + " with ID # " + partsTableView.getSelectionModel().getSelectedItem().getId());
+        }
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("view-mod-part.fxml"));
         Parent root  = loader.load();
 
         ControllerModPart modPart = loader.getController();
+        modPart.PopulatePartInfo(partsTableView.getSelectionModel().getSelectedItem().getId() - 1);
 
         Stage stage = new Stage();
         stage.setTitle("Modify Part");
