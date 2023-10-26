@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0"
+            xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jd.inventorymanagement.controller.ControllerModProduct">
+   <children>
+      <Label layoutX="89.0" layoutY="51.0" text="Modify Product">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="modProdTFields" layoutX="115.0" layoutY="116.0" prefHeight="260.0" prefWidth="325.0">
+         <children>
+            <Label layoutX="15.0" layoutY="20.0" text="ID" />
+            <TextField disable="true" editable="false" layoutX="70.0" layoutY="16.0">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="15.0" layoutY="70.0" text="Name" />
+            <TextField layoutX="70.0" layoutY="66.0" />
+            <Label layoutX="15.0" layoutY="120.0" text="Inv" />
+            <TextField layoutX="70.0" layoutY="116.0" prefWidth="85.0" />
+            <Label layoutX="15.0" layoutY="170.0" text="Price" />
+            <TextField layoutX="70.0" layoutY="166.0" prefWidth="85.0" />
+            <Label layoutX="15.0" layoutY="220.0" text="Max" />
+            <TextField layoutX="70.0" layoutY="216.0" prefWidth="85.0" />
+            <Label layoutX="186.0" layoutY="220.0" text="Min" />
+            <TextField layoutX="226.0" layoutY="216.0" prefWidth="85.0" />
+         </children>
+      </AnchorPane>
+      <VBox alignment="CENTER_RIGHT" layoutX="650.0" layoutY="39.0" prefHeight="235.0" prefWidth="550.0">
+         <children>
+            <TextField fx:id="modProdPartsSearchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" prefHeight="30.0" prefWidth="175.0" promptText="Search by Part ID or Name" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TableView fx:id="modProdTbParts" prefHeight="300.0" prefWidth="470.0">
+               <columns>
+                  <TableColumn fx:id="modProdPartId" prefWidth="90.0" text="Part ID" />
+                  <TableColumn fx:id="modProdPartName" prefWidth="112.0" text="Part Name" />
+                  <TableColumn fx:id="modProdPartLvl" prefWidth="120.0" text="Inventory Level" />
+                  <TableColumn fx:id="modProdPartPrice" prefWidth="145.0" text="Price / Cost Per Unit" />
+               </columns>
+            </TableView>
+            <Button maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onModProdPartsAddButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add">
+               <VBox.margin>
+                  <Insets right="50.0" top="8.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="40.0" right="40.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="CENTER_RIGHT" layoutX="650.0" layoutY="282.0" prefHeight="235.0" prefWidth="550.0" spacing="10.0">
+         <children>
+            <TableView fx:id="modProdCurrentPartsTb" prefHeight="300.0" prefWidth="470.0">
+               <columns>
+                  <TableColumn fx:id="modProdCurrentPartId" prefWidth="90.0" text="Part ID" />
+                  <TableColumn fx:id="modProdCurrentPartName" prefWidth="112.0" text="Part Name" />
+                  <TableColumn fx:id="modProdCurrentPartLvl" prefWidth="120.0" text="Inventory Level" />
+                  <TableColumn fx:id="modProdCurrentPartPrice" prefWidth="145.0" text="Price / Cost Per Unit" />
+               </columns>
+            </TableView>
+            <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="470.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onModProdRemovePartClicked" prefHeight="26.0" text="Remove Associated Part" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onModProdSaveClicked" prefHeight="26.0" prefWidth="52.0" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#onModProdCancel" prefHeight="26.0" prefWidth="52.0" text="Cancel" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="40.0" right="40.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

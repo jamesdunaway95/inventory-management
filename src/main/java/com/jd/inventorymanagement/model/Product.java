@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
  *
  * @author James Dunaway
  */
-public abstract class Product {
+public class Product {
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private int id;
     private String name;
@@ -15,6 +15,7 @@ public abstract class Product {
     private int stock;
     private int min;
     private int max;
+
     public Product(int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;
