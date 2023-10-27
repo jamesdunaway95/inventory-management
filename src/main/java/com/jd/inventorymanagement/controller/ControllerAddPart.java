@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -129,38 +130,33 @@ public class ControllerAddPart implements Initializable {
 
     // Attempted to validate inputs with try-catch but couldn't get it to work correctly. This method of utilizing the .matches() with regex works but took more effort.
     private boolean ValidateTextFields() {
-        // TODO: Implement proper error dialog
         if (!partLvlTxt.getText().matches("\\d+")) {
-            System.out.println("Inventory level should be a whole number.");
+            JOptionPane.showMessageDialog(new JFrame(), "Inventory level must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             partLvlTxt.setText("");
             return false;
         }
 
-        // TODO: Implement proper error dialog
         if (!partPriceTxt.getText().matches("\\d{1,2}\\.\\d{1,2}")) {
-            System.out.println("Price should be a number with up to two decimal places.");
+            JOptionPane.showMessageDialog(new JFrame(), "Price must be a number with up to two decimal places.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             partPriceTxt.setText("");
             return false;
         }
 
-        // TODO: Implement proper error dialog
         if (!partMinTxt.getText().matches("\\d+")) {
-            System.out.println("Min should be a whole number.");
+            JOptionPane.showMessageDialog(new JFrame(), "Min must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             partMinTxt.setText("");
             return false;
         }
 
-        // TODO: Implement proper error dialog
         if (!partMaxTxt.getText().matches("\\d+")) {
-            System.out.println("Max should be a whole number.");
+            JOptionPane.showMessageDialog(new JFrame(), "Max must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             partMaxTxt.setText("");
             return false;
         }
 
-        // TODO: Implement proper error dialog
         if (partMachIdTxt.isVisible()) {
             if (!partMachIdTxt.getText().matches("\\d+")) {
-                System.out.println("Machine ID should be a whole number.");
+                JOptionPane.showMessageDialog(new JFrame(), "Machine ID must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 partMachIdTxt.setText("");
                 return false;
             }
@@ -170,15 +166,13 @@ public class ControllerAddPart implements Initializable {
     }
 
     private boolean ValidateInventoryLvl(int min, int lvl, int max) {
-        // TODO: Implement proper error dialog
         if (min > lvl || min > max) {
-            System.out.println("Min cannot be greater than the current or max inventory level.");
+            JOptionPane.showMessageDialog(new JFrame(), "Min cannot be greater than the current or max inventory level.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        // TODO: Implement proper error dialog
         if (lvl > max) {
-            System.out.println("Inventory level should be between the Min and Max values.");
+            JOptionPane.showMessageDialog(new JFrame(), "Inventory level must fall between the Min and Max values.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

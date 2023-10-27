@@ -1,6 +1,7 @@
 module com.jd.inventorymanagement {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.jd.inventorymanagement to javafx.fxml;

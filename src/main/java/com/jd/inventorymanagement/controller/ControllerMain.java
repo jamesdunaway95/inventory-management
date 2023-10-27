@@ -10,14 +10,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -29,7 +32,7 @@ public class ControllerMain implements Initializable {
     private TableView<Part> partsTableView;
 
     @FXML
-    private TextField partsSearchField;
+    private TextField partsSearchField; // TODO: Implement search functionality
 
     @FXML
     private TableColumn<Part, Integer> partIdCol;
@@ -47,7 +50,7 @@ public class ControllerMain implements Initializable {
     private TableView<Product> prodTableView;
 
     @FXML
-    private TextField productsSearchField;
+    private TextField productsSearchField; // TODO: Implement search functionality
 
     @FXML
     private TableColumn<Product, Integer> prodIdCol;
@@ -72,6 +75,7 @@ public class ControllerMain implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Add New Part");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -81,29 +85,23 @@ public class ControllerMain implements Initializable {
         Parent root = loader.load();
 
         ControllerAddProduct addProduct = loader.getController();
-        addProduct.SetProductId(1);
+        addProduct.SetProductId(Inventory.getAllProducts().size() + 1);
 
         Stage stage = new Stage();
         stage.setTitle("Add New Product");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
+    // At first I utilized an over-complicated try-catch method due to getting null errors. After trying different methods, I landed on this much more elegant method.
     @FXML
     void onModifyPartsButton(ActionEvent event) throws IOException {
-        // FIXME: This is TOO much for what we need to accomplish.
-        int selectedPart = 0;
+        Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
-        try {
-            selectedPart = partsTableView.getSelectionModel().getSelectedItem().getId();
-        } catch (NullPointerException e) {
-            System.out.println("No modifiable part selected.");
-        }
-
-        if (selectedPart == 0) {
+        if (selectedPart == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "No Part Selected", JOptionPane.ERROR_MESSAGE);
             return;
-        } else {
-            System.out.println("Now modifying " + selectedPart + " with ID # " + partsTableView.getSelectionModel().getSelectedItem().getId());
         }
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("view-mod-part.fxml"));
@@ -115,12 +113,19 @@ public class ControllerMain implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Modify Part");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
+    // At first I utilized an over-complicated try-catch method due to getting null errors. After trying different methods, I landed on this much more elegant method.
     @FXML
     void onModifyProductsButton(ActionEvent event) throws IOException {
-        // TODO: Verify there is a product selected to modify
+        Product selectedProduct = prodTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedProduct == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid product.", "No Product Selected", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("view-mod-product.fxml"));
         Parent root = loader.load();
@@ -130,17 +135,36 @@ public class ControllerMain implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Modify Product");
         stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
     @FXML
     void onDeletePartsButton(ActionEvent event) {
-        System.out.println("Delete Parts Menu");
+        Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedPart == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "No Part Selected", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (CreateDeleteAlert("Are you sure you want to delete " + selectedPart.getName() + "?")) {
+            partsTableView.getItems().remove(selectedPart);
+        }
     }
 
     @FXML
     void onDeleteProductsButton(ActionEvent event) {
-        System.out.println("Delete Products Menu");
+        Product selectedProduct = prodTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedProduct == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid product.", "No Product Selected", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (CreateDeleteAlert("Are you sure you want to delete " + selectedProduct.getName() + "?")) {
+            prodTableView.getItems().remove(selectedProduct);
+        }
     }
 
     @FXML
@@ -163,5 +187,32 @@ public class ControllerMain implements Initializable {
         prodNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         prodPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         prodLvlCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    }
+
+    private boolean CreateDeleteAlert(String message) {
+        Stage stage = (Stage) prodTableView.getScene().getWindow();
+
+        Alert.AlertType type = Alert.AlertType.CONFIRMATION;
+
+        Alert deleteAlert = new Alert(type, "");
+
+        deleteAlert.initModality(Modality.APPLICATION_MODAL);
+        deleteAlert.initOwner(stage);
+
+        deleteAlert.getDialogPane().setHeaderText("Delete");
+        deleteAlert.getDialogPane().setContentText(message);
+
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+        if(result.get() == ButtonType.OK)
+        {
+
+            return true;
+        }
+        else if (result.get() == ButtonType.CANCEL)
+        {
+            return false;
+        }
+
+        return false;
     }
 }

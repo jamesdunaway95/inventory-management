@@ -35,7 +35,7 @@ public class Main extends Application {
         Product product2 = new Product(2, "Product Two", 69.99, 3, 1, 7);
         product1.addAssociatedPart(part2);
         product1.addAssociatedPart(part3);
-        Product product3 = new Product(2, "Product Three", 99.99, 1, 1, 3);
+        Product product3 = new Product(3, "Product Three", 99.99, 1, 1, 3);
         product1.addAssociatedPart(part4);
         product1.addAssociatedPart(part5);
 
