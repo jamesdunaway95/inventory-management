@@ -4,6 +4,8 @@ import com.jd.inventorymanagement.Main;
 import com.jd.inventorymanagement.model.Inventory;
 import com.jd.inventorymanagement.model.Part;
 import com.jd.inventorymanagement.model.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +34,7 @@ public class ControllerMain implements Initializable {
     private TableView<Part> partsTableView;
 
     @FXML
-    private TextField partsSearchField; // TODO: Implement search functionality
+    private TextField partsSearchField;
 
     @FXML
     private TableColumn<Part, Integer> partIdCol;
@@ -50,7 +52,7 @@ public class ControllerMain implements Initializable {
     private TableView<Product> prodTableView;
 
     @FXML
-    private TextField productsSearchField; // TODO: Implement search functionality
+    private TextField productsSearchField;
 
     @FXML
     private TableColumn<Product, Integer> prodIdCol;
@@ -63,6 +65,76 @@ public class ControllerMain implements Initializable {
 
     @FXML
     private TableColumn<Product, Double> prodPriceCol;
+
+    @FXML
+    void onPartSearchClicked(ActionEvent event) {
+        if (partsSearchField.getText().isEmpty()) {
+            partsTableView.setItems(Inventory.getAllParts());
+            return;
+        }
+
+        try {
+            Integer.parseInt(partsSearchField.getText());
+
+            Part searchedPart = Inventory.lookupPart(Integer.parseInt(partsSearchField.getText()) - 1);
+
+            if (searchedPart == null) {
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+
+            partsTableView.getSelectionModel().select(searchedPart);
+
+        } catch (NumberFormatException e) {
+            ObservableList<Part> searchedParts = Inventory.lookupPart(partsSearchField.getText());
+
+            if(searchedParts.size() == 1) {
+                partsTableView.getSelectionModel().select(searchedParts.get(0));
+                return;
+            }
+
+            if (!searchedParts.isEmpty()) {
+                partsTableView.setItems(searchedParts);
+            } else {
+                partsTableView.setItems(searchedParts);
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    @FXML
+    void onProductSearchClicked(ActionEvent event) {
+        if (productsSearchField.getText().isEmpty()) {
+            prodTableView.setItems(Inventory.getAllProducts());
+            return;
+        }
+
+        try {
+            Integer.parseInt(productsSearchField.getText());
+
+            Product searchedProduct = Inventory.lookupProduct(Integer.parseInt(productsSearchField.getText()) - 1);
+
+            if (searchedProduct == null) {
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+
+            prodTableView.getSelectionModel().select(searchedProduct);
+
+        } catch (NumberFormatException e) {
+            ObservableList<Product> searchedProducts = Inventory.lookupProduct(productsSearchField.getText());
+
+            if(searchedProducts.size() == 1) {
+                prodTableView.getSelectionModel().select(searchedProducts.get(0));
+                return;
+            }
+
+            if (!searchedProducts.isEmpty()) {
+                prodTableView.setItems(searchedProducts);
+            } else {
+                prodTableView.setItems(searchedProducts);
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     @FXML
     void onAddPartsButton(ActionEvent event) throws IOException {
@@ -100,7 +172,7 @@ public class ControllerMain implements Initializable {
         Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
-            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "No Part Selected", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -144,8 +216,15 @@ public class ControllerMain implements Initializable {
         Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
-            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "No Part Selected", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid part.", "Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+
+        for (int i = 0; i < Inventory.getAllProducts().size(); i++) {
+            if (Inventory.lookupProduct(i).getAllAssociatedParts().contains(selectedPart)) {
+                JOptionPane.showMessageDialog(new JFrame(), Inventory.lookupProduct(i ).getName() + " currently utilizes " + selectedPart.getName() + ", therefore, it cannot be deleted.", "Delete Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
         if (CreateDeleteAlert("Are you sure you want to delete " + selectedPart.getName() + "?")) {
@@ -158,7 +237,7 @@ public class ControllerMain implements Initializable {
         Product selectedProduct = prodTableView.getSelectionModel().getSelectedItem();
 
         if (selectedProduct == null) {
-            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid product.", "No Product Selected", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "You must first select a valid product.", "Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

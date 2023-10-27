@@ -29,7 +29,11 @@ public class Inventory {
      * @return Part, if exists.
      */
     public static Part lookupPart(Integer partId) {
-        return allParts.get(partId);
+        try {
+            return allParts.get(partId);
+        } catch(IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**
@@ -37,10 +41,16 @@ public class Inventory {
      * @return ObservableList with all parts matching partName.
      */
     public static ObservableList<Part> lookupPart(String partName) {
-        /**
-         * TODO: Add search function to find matching partName(s) in allParts list. BST?
-         */
-        return null;
+        ObservableList<Part> result = FXCollections.observableArrayList();
+        partName = partName.toLowerCase();
+
+        for (Part part : getAllParts()) {
+            if (part.getName().toLowerCase().contains(partName)) {
+                result.add(part);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -48,10 +58,11 @@ public class Inventory {
      * @return Product, if exists.
      */
     public static Product lookupProduct(Integer productId) {
-        /**
-         * TODO: Add search function to find matching productId in allProducts list. BST?
-         */
-        return null;
+        try {
+            return allProducts.get(productId);
+        } catch(IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     /**
@@ -59,10 +70,16 @@ public class Inventory {
      * @return ObservableList with all Product(s) matching productName.
      */
     public static ObservableList<Product> lookupProduct(String productName) {
-        /**
-         * TODO: Add search function to find matching productName(s) in allProducts list. BST?
-         */
-        return null;
+        ObservableList<Product> result = FXCollections.observableArrayList();
+        productName = productName.toLowerCase();
+
+        for (Product product : getAllProducts()) {
+            if (product.getName().toLowerCase().contains(productName)) {
+                result.add(product);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -78,14 +95,9 @@ public class Inventory {
      * @param selectedProduct the selectedProduct to replace the current one in inventory.
      */
     public static void updateProduct(Integer index, Product selectedProduct) {
-        /**
-         * TODO: Add update functionality, e.g. find the selected product at the provided index and replace it with the selectedProduct.
-         */
+        allProducts.set(index, selectedProduct);
     }
 
-    /**
-     * TODO: Need to test
-     */
     /**
      * @param selectedPart the part to delete from current inventory.
      * @return true if deleted, else, false.
@@ -95,9 +107,6 @@ public class Inventory {
     }
 
     /**
-     * TODO: Need to test
-     */
-    /**
      * @param selectedProduct the product to delete from current inventory.
      * @return true if deleted, else, false.
      */
@@ -106,18 +115,12 @@ public class Inventory {
     }
 
     /**
-     * TODO: Need to test
-     */
-    /**
      * @return ObservableList of all parts in inventory.
      */
     public static ObservableList<Part> getAllParts() {
         return allParts;
     }
 
-    /**
-     * TODO: Need to test
-     */
     /**
      * @return ObservableList of all products in inventory.
      */

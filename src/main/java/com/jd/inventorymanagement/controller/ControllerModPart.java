@@ -80,13 +80,13 @@ public class ControllerModPart implements Initializable {
         if (partMachIdTxt.isVisible()) {
             int machId = Integer.parseInt(partMachIdTxt.getText());
 
-            InHouse newPart = new InHouse(id, name, price, lvl, min, max, machId);
-            Inventory.updatePart(id - 1, newPart);
+            InHouse updatedPart = new InHouse(id, name, price, lvl, min, max, machId);
+            Inventory.updatePart(id - 1, updatedPart);
         } else {
             String compName = partCompNameTxt.getText();
 
-            Outsourced newPart = new Outsourced(id, name, price, lvl, min, max, compName);
-            Inventory.updatePart(id - 1, newPart);
+            Outsourced updatedPart = new Outsourced(id, name, price, lvl, min, max, compName);
+            Inventory.updatePart(id - 1, updatedPart);
         }
 
         Stage stage = (Stage) modPartWindow.getScene().getWindow();
@@ -126,13 +126,6 @@ public class ControllerModPart implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partPriceTxt.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if(!partPriceTxt.getText().matches("\\d{1,2}\\.\\d{1,2}")){
-                    partPriceTxt.setText("");
-                }
-            }
-        });
 
     }
 

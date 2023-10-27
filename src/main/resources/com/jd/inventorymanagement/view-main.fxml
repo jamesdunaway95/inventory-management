@@ -15,14 +15,22 @@
    <left>
       <VBox prefHeight="400.0" prefWidth="550.0" style="-fx-border-radius: 15; -fx-border-width: 1; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="250.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                <children>
                   <Label text="Parts">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="135.0" />
+                     </HBox.margin>
                   </Label>
                   <TextField fx:id="partsSearchField" prefHeight="30.0" prefWidth="175.0" promptText="Search by Part ID or Name" />
+                  <Button mnemonicParsing="false" onAction="#onPartSearchClicked" prefHeight="30.0" prefWidth="65.0" text="Search">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
                <padding>
                   <Insets bottom="5.0" />
@@ -76,14 +84,22 @@
             <Insets left="40.0" right="40.0" />
          </padding>
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="215.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="25.0">
                <children>
-                  <Label prefHeight="27.0" prefWidth="78.0" text="Products">
+                  <Label prefHeight="27.0" prefWidth="110.0" text="Products">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="70.0" />
+                     </HBox.margin>
                   </Label>
                   <TextField fx:id="productsSearchField" prefHeight="30.0" prefWidth="175.0" promptText="Search by Product ID or Name" />
+                  <Button mnemonicParsing="false" onAction="#onProductSearchClicked" prefHeight="30.0" prefWidth="65.0" text="Search">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
                <padding>
                   <Insets bottom="5.0" />

@@ -22,12 +22,14 @@ public class Main extends Application {
         InHouse part3 = new InHouse(3, "Part Three", 19.99, 2, 1, 5, 7);
         Outsourced part4 = new Outsourced(4, "Part Four", 15.99, 3, 3, 5, "Franken");
         Outsourced part5 = new Outsourced(5, "Part Five", 1.99, 20, 5, 50, "Nestle");
+        Outsourced part6 = new Outsourced(6, "Part Five: The Sequel", 10.99, 20, 5, 50, "Nestle");
 
         Inventory.addPart(part1);
         Inventory.addPart(part2);
         Inventory.addPart(part3);
         Inventory.addPart(part4);
         Inventory.addPart(part5);
+        Inventory.addPart(part6);
 
         Product product1 = new Product(1, "Product One", 59.99, 3, 3, 5);
         product1.addAssociatedPart(part1);
@@ -38,10 +40,15 @@ public class Main extends Application {
         Product product3 = new Product(3, "Product Three", 99.99, 1, 1, 3);
         product1.addAssociatedPart(part4);
         product1.addAssociatedPart(part5);
+        Product product4 = new Product(4, "Product Three: Sequel", 999.99, 1, 1, 3);
+        product1.addAssociatedPart(part4);
+        product1.addAssociatedPart(part4);
+        product1.addAssociatedPart(part5);
 
         Inventory.addProduct(product1);
         Inventory.addProduct(product2);
         Inventory.addProduct(product3);
+        Inventory.addProduct(product4);
 
         launch();
     }

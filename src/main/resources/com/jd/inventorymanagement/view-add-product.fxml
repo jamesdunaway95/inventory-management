@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerAddProduct">
+<AnchorPane fx:id="addProductWindow" prefHeight="550.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerAddProduct">
    <children>
       <Label layoutX="89.0" layoutY="51.0" text="Add Product">
          <font>
@@ -45,15 +45,15 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <TableView fx:id="addProdTbParts" prefHeight="300.0" prefWidth="470.0">
+            <TableView fx:id="availPartsTableView" prefHeight="300.0" prefWidth="470.0">
                <columns>
-                  <TableColumn fx:id="addProdPartId" prefWidth="90.0" text="Part ID" />
-                  <TableColumn fx:id="addProdPartName" prefWidth="112.0" text="Part Name" />
-                  <TableColumn fx:id="addProdPartLvl" prefWidth="120.0" text="Inventory Level" />
-                  <TableColumn fx:id="addProdPartPrice" prefWidth="145.0" text="Price / Cost Per Unit" />
+                  <TableColumn fx:id="availPartsPartIdCol" prefWidth="90.0" text="Part ID" />
+                  <TableColumn fx:id="availPartsPartNameCol" prefWidth="112.0" text="Part Name" />
+                  <TableColumn fx:id="availPartsLvlCol" prefWidth="120.0" text="Inventory Level" />
+                  <TableColumn fx:id="availPartsPriceCol" prefWidth="145.0" text="Price / Cost Per Unit" />
                </columns>
             </TableView>
-            <Button maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onAddProdPartsAddButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add">
+            <Button maxHeight="26.0" minHeight="26.0" mnemonicParsing="false" onAction="#onAddPartClicked" prefHeight="26.0" prefWidth="52.0" text="Add">
                <VBox.margin>
                   <Insets right="50.0" top="8.0" />
                </VBox.margin>
@@ -65,21 +65,21 @@
       </VBox>
       <VBox alignment="CENTER_RIGHT" layoutX="650.0" layoutY="282.0" prefHeight="235.0" prefWidth="550.0" spacing="10.0">
          <children>
-            <TableView fx:id="addProdCurrentPartsTb" prefHeight="300.0" prefWidth="470.0">
+            <TableView fx:id="currPartsTableView" prefHeight="300.0" prefWidth="470.0">
                <columns>
-                  <TableColumn fx:id="addProdCurrentPartId" prefWidth="90.0" text="Part ID" />
-                  <TableColumn fx:id="addProdCurrentPartName" prefWidth="112.0" text="Part Name" />
-                  <TableColumn fx:id="addProdCurrentPartLvl" prefWidth="120.0" text="Inventory Level" />
-                  <TableColumn fx:id="addProdCurrentPartPrice" prefWidth="145.0" text="Price / Cost Per Unit" />
+                  <TableColumn fx:id="currPartsPartIdCol" prefWidth="90.0" text="Part ID" />
+                  <TableColumn fx:id="currPartsPartNameCol" prefWidth="112.0" text="Part Name" />
+                  <TableColumn fx:id="currPartsLvlCol" prefWidth="120.0" text="Inventory Level" />
+                  <TableColumn fx:id="currPartsPriceCol" prefWidth="145.0" text="Price / Cost Per Unit" />
                </columns>
             </TableView>
             <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="470.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onAddProdRemovePartClicked" prefHeight="26.0" text="Remove Associated Part" />
+                  <Button mnemonicParsing="false" onAction="#onRemoveAssociatedPartClicked" prefHeight="26.0" text="Remove Associated Part" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onAddProdSaveClicked" prefHeight="26.0" prefWidth="52.0" text="Save" />
-                        <Button mnemonicParsing="false" onAction="#onAddProdCancel" prefHeight="26.0" prefWidth="52.0" text="Cancel" />
+                        <Button mnemonicParsing="false" onAction="#onSaveProdClicked" prefHeight="26.0" prefWidth="52.0" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#onCancelProdClicked" prefHeight="26.0" prefWidth="52.0" text="Cancel" />
                      </children>
                   </HBox>
                </children>
