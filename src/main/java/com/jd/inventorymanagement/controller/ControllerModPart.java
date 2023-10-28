@@ -165,8 +165,8 @@ public class ControllerModPart implements Initializable {
             return false;
         }
 
-        if (!partPriceTxt.getText().matches("\\d{1,2}\\.\\d{1,2}")) {
-            JOptionPane.showMessageDialog(new JFrame(), "Price must be a number with up to two decimal places.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        if (!partPriceTxt.getText().matches("\\d{1,6}\\.\\d{1,2}")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Price must be a number with up to two decimal places, i.e., $$.$ or $$.$$", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             partPriceTxt.setText("");
             return false;
         }

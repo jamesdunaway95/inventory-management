@@ -29,13 +29,13 @@ import java.util.ResourceBundle;
  */
 public class ControllerAddProduct implements Initializable {
     @FXML
-    private TextField addProdPartsSearchField;
+    private TextField partsSearchField;
 
     @FXML
     private AnchorPane addProdTFields;
 
     @FXML
-    private AnchorPane addProductWindow;
+    private AnchorPane addProdWindow;
 
     @FXML
     private TableColumn<Part, Integer> availPartsLvlCol;
@@ -71,7 +71,7 @@ public class ControllerAddProduct implements Initializable {
     private TextField prodIdTxt;
 
     @FXML
-    private TextField prodInvTxt;
+    private TextField prodLvlTxt;
 
     @FXML
     private TextField prodMaxTxt;
@@ -89,6 +89,41 @@ public class ControllerAddProduct implements Initializable {
 
     public void SetProductId(int newId) {
         this.prodIdTxt.setText(String.valueOf(newId));
+    }
+
+    @FXML
+    void onPartSearchClicked(ActionEvent event) {
+        if (partsSearchField.getText().isEmpty()) {
+            availPartsTableView.setItems(Inventory.getAllParts());
+            return;
+        }
+
+        try {
+            Integer.parseInt(partsSearchField.getText());
+
+            Part searchedPart = Inventory.lookupPart(Integer.parseInt(partsSearchField.getText()) - 1);
+
+            if (searchedPart == null) {
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+
+            availPartsTableView.getSelectionModel().select(searchedPart);
+
+        } catch (NumberFormatException e) {
+            ObservableList<Part> searchedParts = Inventory.lookupPart(partsSearchField.getText());
+
+            if(searchedParts.size() == 1) {
+                availPartsTableView.getSelectionModel().select(searchedParts.get(0));
+                return;
+            }
+
+            if (!searchedParts.isEmpty()) {
+                availPartsTableView.setItems(searchedParts);
+            } else {
+                availPartsTableView.setItems(searchedParts);
+                JOptionPane.showMessageDialog(new JFrame(), "No matches found. Please double-check your spelling and try again.", "No Matches Found", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     @FXML
@@ -111,7 +146,7 @@ public class ControllerAddProduct implements Initializable {
             }
         }
 
-        Stage stage = (Stage) addProductWindow.getScene().getWindow();
+        Stage stage = (Stage) addProdWindow.getScene().getWindow();
         stage.close();
     }
 
@@ -129,7 +164,31 @@ public class ControllerAddProduct implements Initializable {
 
     @FXML
     void onSaveProdClicked(ActionEvent event) {
+        if (!ValidateTextFields()) {
+            return;
+        }
 
+        int id = Integer.parseInt(prodIdTxt.getText());
+        String name = prodNameTxt.getText();
+        double price = Double.parseDouble(prodPriceTxt.getText());
+        int lvl = Integer.parseInt(prodLvlTxt.getText());
+        int min = Integer.parseInt(prodMinTxt.getText());
+        int max = Integer.parseInt(prodMaxTxt.getText());
+
+        if (!ValidateInventoryLvl(min, lvl, max)) {
+            return;
+        }
+
+        Product newProduct = new Product(id, name, price, lvl, min, max);
+
+        for (Part part : associatedParts) {
+            newProduct.addAssociatedPart(part);
+        }
+
+        Inventory.addProduct(newProduct);
+
+        Stage stage = (Stage) addProdWindow.getScene().getWindow();
+        stage.close();
     }
 
     @Override
@@ -147,5 +206,52 @@ public class ControllerAddProduct implements Initializable {
         currPartsPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         currPartsPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         currPartsLvlCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    }
+
+    private boolean ValidateTextFields() {
+        if (!prodLvlTxt.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Inventory level must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            prodLvlTxt.setText("");
+            return false;
+        }
+
+        if (!prodPriceTxt.getText().matches("\\d{1,6}\\.\\d{1,2}")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Price must be a number with up to two decimal places, i.e., $$.$ or $$.$$", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            prodPriceTxt.setText("");
+            return false;
+        }
+
+        if (!prodMinTxt.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Min must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            prodMinTxt.setText("");
+            return false;
+        }
+
+        if (!prodMaxTxt.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Max must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            prodMaxTxt.setText("");
+            return false;
+        }
+
+        if (associatedParts.isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "A product must have at least one associated part.", "Missing Part(s)", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean ValidateInventoryLvl(int min, int lvl, int max) {
+        if (min > lvl || min > max) {
+            JOptionPane.showMessageDialog(new JFrame(), "Min cannot be greater than the current or max inventory level.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (lvl > max) {
+            JOptionPane.showMessageDialog(new JFrame(), "Inventory level must fall between the Min and Max values.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 }
