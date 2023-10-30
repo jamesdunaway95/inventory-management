@@ -1,6 +1,6 @@
 package com.jd.inventorymanagement.model;
 /**
- *
+ * This class is an abstract class used as a basis for the InHouse and Outsourced class objects.
  * @author James Dunaway
  */
 public abstract class Part {
@@ -11,6 +11,15 @@ public abstract class Part {
     private int min;
     private int max;
 
+    /**
+     * Class constructor
+     * @param id
+     * @param name
+     * @param price
+     * @param stock
+     * @param min
+     * @param max
+     */
     public Part(int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;

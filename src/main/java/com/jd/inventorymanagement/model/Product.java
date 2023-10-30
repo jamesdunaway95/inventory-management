@@ -4,7 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * This class holds the information and methods necessary for product object creation and maintenance.
+ * It consists of a public constructor and public getter/setter methods.
  * @author James Dunaway
  */
 public class Product {
@@ -16,6 +17,15 @@ public class Product {
     private int min;
     private int max;
 
+    /**
+     * Class Constructor
+     * @param id
+     * @param name
+     * @param price
+     * @param stock
+     * @param min
+     * @param max
+     */
     public Product(int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;
@@ -110,29 +120,23 @@ public class Product {
     }
 
     /**
-     *
+     * @param part - The part to add to the list
      */
     public void addAssociatedPart(Part part) {
-        /**
-         * @// TODO: 10/4/2023 / Need to test
-         */
-        this.associatedParts.add(part);
+        associatedParts.add(part);
     }
 
     /**
-     *
+     * @param selectedAssociatedPart - The part to remove from the list
      */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-        /**
-         * @// TODO: 10/4/2023 / Need to test
-         */
-        return this.associatedParts.remove(selectedAssociatedPart);
+        return associatedParts.remove(selectedAssociatedPart);
     }
 
     /**
-     *
+     * @return associatedPart ObservableList
      */
-    public ObservableList<Part> getAllAssociatedParts() {
+    public ObservableList<Part> getAllAssociatedParts() throws NullPointerException {
         return associatedParts;
     }
 }

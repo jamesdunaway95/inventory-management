@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="addProdWindow" prefHeight="550.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerAddProduct">
+<AnchorPane fx:id="addProdWindow" prefHeight="550.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerAddProduct">
    <children>
       <Label layoutX="91.0" layoutY="77.0" text="Add Product">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="addProdTFields" layoutX="115.0" layoutY="145.0" prefHeight="260.0" prefWidth="325.0">
+      <AnchorPane layoutX="115.0" layoutY="145.0" prefHeight="260.0" prefWidth="325.0">
          <children>
             <Label layoutX="15.0" layoutY="20.0" text="ID" />
             <TextField fx:id="prodIdTxt" disable="true" editable="false" layoutX="70.0" layoutY="16.0" promptText="Auto-Gen Disabled">

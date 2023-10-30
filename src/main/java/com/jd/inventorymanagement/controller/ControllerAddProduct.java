@@ -5,34 +5,34 @@ import com.jd.inventorymanagement.model.Part;
 import com.jd.inventorymanagement.model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 /**
- *
+ * This class controls the behavior/logic of the Add Product menu.
+ * It merely creates a new product based on the data entered by the user, assigns the associated parts, if applicable,
+ * and adds it to the Inventory.
+ * Improvement/Extension Ideas:
+    * Implementing separate classes for methods reused across multiple classes.
+    * The current error delivery method is a bit messy. Could be improved with a dedicated class or method and cleaner methods.
+    * The IDE doesn't seem to like my local observable list. I don't know if this is an IDE thing or a Java thing but this made the most sense to me. Maybe there is a better way handle it though.
+    * A more complex system could benefit from a more complex ID generator.
  * @author James Dunaway
  */
 public class ControllerAddProduct implements Initializable {
     @FXML
     private TextField partsSearchField;
-
-    @FXML
-    private AnchorPane addProdTFields;
 
     @FXML
     private AnchorPane addProdWindow;
@@ -87,12 +87,23 @@ public class ControllerAddProduct implements Initializable {
 
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
+    /**
+     * This public method was created so the main controller can pass the ID, since the main controller is persistent.
+     * @param newId - The generated product id that will be used for the new product.
+     */
     public void SetProductId(int newId) {
         this.prodIdTxt.setText(String.valueOf(newId));
     }
 
+    /**
+     * This method utilizes the parts search text field to manipulate and filter the parts table.
+     * Errors/Issues:
+     *      * The search by string function was implemented first. When implementing the search by ID functionality, I ran
+     *      * into null reference issues. To resolve this, I utilized the try - catch methods to see if the search field
+     *      * contents contained a valid integer, if not, the function searches via string.
+     */
     @FXML
-    void onPartSearchClicked(ActionEvent event) {
+    void onPartSearchClicked() {
         if (partsSearchField.getText().isEmpty()) {
             availPartsTableView.setItems(Inventory.getAllParts());
             return;
@@ -126,8 +137,12 @@ public class ControllerAddProduct implements Initializable {
         }
     }
 
+    /**
+     * This method checks if a part is selected, if so, it adds that part to the local associate parts list, otherwise,
+     * it will generate an error dialogue.
+     */
     @FXML
-    void onAddPartClicked(ActionEvent event) {
+    void onAddPartClicked() {
         Part selectedPart = availPartsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
@@ -138,20 +153,28 @@ public class ControllerAddProduct implements Initializable {
         associatedParts.add(selectedPart);
     }
 
+    /**
+     * This class gets the stage reference, and closes it.
+     * Errors/Issues:
+     *      * In its first iteration, this method cleared out each text field. This was unnecessary as this class is
+     *      * not holding any persistent data, therefore, it was removed.
+     */
     @FXML
-    void onCancelProdClicked(ActionEvent event) {
-        for (Node node : addProdTFields.getChildren()) {
-            if (node instanceof TextField) {
-                ((TextField)node).setText(""); // Clear text
-            }
-        }
-
+    void onCancelProdClicked() {
         Stage stage = (Stage) addProdWindow.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * This class checks if a part is selected on the associated parts table, if not, it creates an error dialogue.
+     * If there is, a confirmation dialogue is created; based on the users response, it will remove the part from the
+     * table, or it will leave the method, cancelling the removal.
+     * Errors/Issues:
+        * Originally, I misread the prompt and did not see there should be a confirmation dialogue here, so it was
+        * not included.
+     */
     @FXML
-    void onRemoveAssociatedPartClicked(ActionEvent event) {
+    void onRemoveAssociatedPartClicked() {
         Part selectedPart = currPartsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
@@ -159,11 +182,23 @@ public class ControllerAddProduct implements Initializable {
             return;
         }
 
+        if (!CreateRemoveAlert("Are you sure you want to remove " + selectedPart.getName() + " from this product?")) {
+            return;
+        }
+
         associatedParts.remove(selectedPart);
     }
 
+    /**
+     * This class handles the creation of the product object and adds said object to the inventory class.
+     * First, it validates the required text fields meet the specified guidelines (using the ValidateTextFields() method).
+     * Second, it converts the text field data into the appropriate types (e.g., int, double).
+     * Third, it creates the new product object with the initial data, then adds any parts found in the local
+        * associated parts table.
+     * Lastly, it adds the product to the inventory, then closes out the window.
+     */
     @FXML
-    void onSaveProdClicked(ActionEvent event) {
+    void onSaveProdClicked() {
         if (!ValidateTextFields()) {
             return;
         }
@@ -191,6 +226,10 @@ public class ControllerAddProduct implements Initializable {
         stage.close();
     }
 
+    /**
+     * This method is used to set up and populate the parts and products tables.
+     * The associated parts table is populated using a locally owned parts list.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         availPartsTableView.setItems(Inventory.getAllParts());
@@ -208,7 +247,19 @@ public class ControllerAddProduct implements Initializable {
         currPartsLvlCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
     }
 
+    /**
+     * This class validates each text field to ensure it meets the programs requirements.
+     * Errors/Issues:
+     *      * At first, I was utilizing built in java methods such as parseInt inside try-catch but couldn't get it to
+     *      * work properly. This led me to utilize .matches() with regex specifications.
+     * @return true - all text fields meet requirements, false - one or more text fields does not meet requirements.
+     */
     private boolean ValidateTextFields() {
+        if (prodNameTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Name cannot be blank.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         if (!prodLvlTxt.getText().matches("\\d+")) {
             JOptionPane.showMessageDialog(new JFrame(), "Inventory level must be a whole number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             prodLvlTxt.setText("");
@@ -233,14 +284,16 @@ public class ControllerAddProduct implements Initializable {
             return false;
         }
 
-        if (associatedParts.isEmpty()) {
-            JOptionPane.showMessageDialog(new JFrame(), "A product must have at least one associated part.", "Missing Part(s)", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
         return true;
     }
 
+    /**
+     * This class verifies that the inventory levels logic are not outside of program guidelines.
+     * @param min - the minimum inventory
+     * @param lvl - the current inventory
+     * @param max - the maximum inventory
+     * @return - true if there are no logical inconsistencies - false, if there are one or more.
+     */
     private boolean ValidateInventoryLvl(int min, int lvl, int max) {
         if (min > lvl || min > max) {
             JOptionPane.showMessageDialog(new JFrame(), "Min cannot be greater than the current or max inventory level.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
@@ -253,5 +306,36 @@ public class ControllerAddProduct implements Initializable {
         }
 
         return true;
+    }
+
+    /**
+     * This method is a copy/paste of the CreateDeleteAlert() method from the main controller with small changes.
+     * @param message - The message that will display when the alert is created.
+     * @return - true, user clicked OK - false, user clicked CANCEL.
+     */
+    private boolean CreateRemoveAlert(String message) {
+        Stage stage = (Stage) addProdWindow.getScene().getWindow();
+
+        Alert.AlertType type = Alert.AlertType.CONFIRMATION;
+
+        Alert deleteAlert = new Alert(type, "");
+
+        deleteAlert.initModality(Modality.APPLICATION_MODAL);
+        deleteAlert.initOwner(stage);
+
+        deleteAlert.getDialogPane().setHeaderText("Remove Part");
+        deleteAlert.getDialogPane().setContentText(message);
+
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+
+        if(result.get() == ButtonType.OK)
+        {
+            return true;
+        }
+        else if (result.get() == ButtonType.CANCEL)
+        {
+            return false;
+        }
+        return false;
     }
 }

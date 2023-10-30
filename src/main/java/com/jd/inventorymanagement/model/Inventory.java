@@ -3,7 +3,8 @@ package com.jd.inventorymanagement.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 /**
- *
+ * This class stores all the parts/products and provides the functionality to find, add, update, and remove them.
+ * The methods and variables are entirely based on the provided UML.
  * @author James Dunaway
  */
 public class Inventory {
@@ -25,6 +26,7 @@ public class Inventory {
     }
 
     /**
+     * These methods use a try/catch with indexoutofboundexception due to the integer based search.
      * @param partId the partId to lookup in inventory
      * @return Part, if exists.
      */
@@ -37,6 +39,11 @@ public class Inventory {
     }
 
     /**
+     * This class utilizes the given string to look for a matching partName and provides a list of any matches.
+     * Though it was not specified I did not want the search to be case-sensitive, so:
+        *  First, the partName string changed to lowerCase.
+        *  Second, the getAllParts() table is looped through, looking for any matches (also in lower case).
+        *  Third, if a match is found, it is added to the result table (which is returned).
      * @param partName the partName to lookup in inventory.
      * @return ObservableList with all parts matching partName.
      */
@@ -54,6 +61,7 @@ public class Inventory {
     }
 
     /**
+     * These methods use a try/catch with indexoutofboundexception due to the integer based search.
      * @param productId the productId to lookup in inventory.
      * @return Product, if exists.
      */
@@ -66,6 +74,11 @@ public class Inventory {
     }
 
     /**
+    * This class utilizes the given string to look for a matching productName and provides a list of any matches.
+    * Though it was not specified I did not want the search to be case-sensitive, so:
+        *  First, the given productName string changed to lowerCase.
+        *  Second, the getAllProducts() table is looped through, looking for any matches (also in lower case).
+        *  Third, if a match is found, it is added to the result table (which is returned).
      * @param productName the productName to lookup in inventory.
      * @return ObservableList with all Product(s) matching productName.
      */

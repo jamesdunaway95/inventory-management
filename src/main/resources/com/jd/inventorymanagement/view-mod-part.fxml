@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="modPartWindow" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerModPart">
+<AnchorPane fx:id="modPartWindow" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jd.inventorymanagement.controller.ControllerModPart">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="650.0" spacing="75.0">
             <children>
